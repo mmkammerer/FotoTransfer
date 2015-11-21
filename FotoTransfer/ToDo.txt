@@ -1,0 +1,44 @@
+﻿To Do
+- Style Template verwenden: Habe ich mal für die Progressbar eingebaut.
+- Siehe http://www.codeproject.com/Articles/84630/WPF-Customize-your-Application-with-Styles-and-C
+
+- Drag and Drop zulassen: Einzelne Fotos auf das Fenster ziehen, die werden dann mit neuem Namen ins Zielverzeichnis kopiert
+
+Bugfixes
+- Fehlermeldung verschwindet nicht wenn der Fehler beseitigt ist
+- Das tut sie jetzt, aber damit verschwindet auch die abschließende Meldung "nnn Fotos wurden kopiert"
+
+---------------------------------------------------------------------------------------
+Fertiggestellt
+
+Settings, letzte Einstellungen merken
+Hilfsklasse für EXIF Extraktion
+Start Aktion codieren
+BrowserDialog zeigt selektierten Pfad an
+
+Start erst freigeben wenn die Felder korrekt ausgefüllt sind
+- Source + Target Dir existieren
+- Date/Time korrekt, Ende >= Start
+- Wie kann ich eine neue Prüfung triggern wenn ich z.B. ein neues Datum eingegeben oder ein Verzeichnis neu angelegt habe?
+- Das geht so: StartCommand implementiert den Eventhandler CanExecuteChanged und gibt das Event and den CommandManager.RequerySuggested weiter.
+  Siehe StartCommand.cs
+
+  Infofenster für laufende Ausgaben anstatt MessageBox
+
+File-Operationen in eigenem Thread
+- Dazu Task Libary verwendet, siehe ViewModel.Start()
+
+Info-Ausgabe
+- Die Kopiertask bekommt ein Progress<string> Objekt, dem sie mit progress.Report(...) Texte mitgeben kann.
+- Das Progress Objekt setzt die Information Property im ViewModel bei jedem Report Aufruf. Dort wiederum wird ein
+  OnPropertyChanged Event an die Information Textbox gesendet.
+
+Schnellere EXIF Extraktion
+- Verwendung der ExifLib, Alter Code ist in ExifFile.ReadMetaDataBitmap noch enthalten.
+- Mindestens Faktor 10!
+
+Start Button erst wieder freigeben wenn die Task abgeschlossen ist.
+- siehe http://stackoverflow.com/questions/14294738/when-is-canexecute-called
+- Wenn die Background-Task endet, muss man CommandManager.InvalidateRequerySuggested() aufrufen um eine neue Abfrage zu erzwingen.
+  Damit wird CanStart() aufgerufen und der Start Button kann sich auf das Ende der Task synchronisieren.
+
