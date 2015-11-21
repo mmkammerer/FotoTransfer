@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -85,20 +86,23 @@
                 DateTime taken;
                 if (!exifReader.GetTagValue<DateTime>(ExifTags.DateTimeOriginal, out taken))
                 {
-                    return false;
+                    // If date is not contained in the EXIF information use the file modified date (LastWriteTime).
+                    // This is usually the time the file was saved in the camera
+                    FileInfo fi = new FileInfo(this.OriginalFileName);
+                    taken = fi.LastWriteTime;
                 }
 
                 this.Taken = taken;
                 string dateTakenIso = this.Taken.ToString("yyyyMMdd_HHmmss");
 
-                string model;
-                if (!exifReader.GetTagValue<string>(ExifTags.Model, out model))
+                string model = string.Empty;
+                string suffix = string.Empty;
+                if (exifReader.GetTagValue<string>(ExifTags.Model, out model))
                 {
-                    return false;
+                    string entry = cameraModelDictionary.FirstOrDefault(e => model.IndexOf(e.Key, StringComparison.OrdinalIgnoreCase) >= 0).Value;
+                    suffix = string.IsNullOrEmpty(entry) ? string.Empty : "_" + entry;
                 }
 
-                string entry = cameraModelDictionary.FirstOrDefault(e => model.IndexOf(e.Key, StringComparison.OrdinalIgnoreCase) >= 0).Value;
-                string suffix = string.IsNullOrEmpty(entry) ? string.Empty : "_" + entry;
 
                 this.NewFileName = string.Format("IMG_{0}{1}.jpg", dateTakenIso, suffix);
                 return true;
