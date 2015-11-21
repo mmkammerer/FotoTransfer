@@ -50,8 +50,8 @@
             // Read initial values from user settings
             this.SourcePath = Properties.Settings.Default.SourcePath;
             this.TargetPath = Properties.Settings.Default.TargetPath;
-            this.StartDate = new DateTime(2000, 1, 1);
             this.EndDate = DateTime.Today;
+            this.StartDate = new DateTime(2000, 1, 1);
         }
 
         /// <summary>
@@ -209,6 +209,11 @@
 
             private set
             {
+                if (value > this.EndDate)
+                {
+                    throw new ArgumentException("Das Startdatum muss vor dem Endedatum liegen");
+                }
+
                 this.startDate = value;
                 this.OnPropertyChanged("StartDate");
             }
@@ -226,6 +231,11 @@
 
             private set
             {
+                if (value < this.StartDate)
+                {
+                    throw new ArgumentException("Das Endedatum muss nach dem Startdatum liegen");
+                }
+
                 this.endDate = value;
                 this.OnPropertyChanged("EndDate");
             }

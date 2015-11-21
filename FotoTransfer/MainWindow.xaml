@@ -7,8 +7,16 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <DatePicker x:Name="DateStart" HorizontalAlignment="Left" Margin="105,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" Height="24" Width="129"/>
-        <DatePicker x:Name="DateEnd" HorizontalAlignment="Left" Margin="302,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}" Height="24" Width="129"/>
+        <DatePicker Name="DateStart" HorizontalAlignment="Left" Margin="105,180,0,0" VerticalAlignment="Top" Height="24" Width="129">
+            <DatePicker.SelectedDate>
+                <Binding Path="StartDate" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </DatePicker.SelectedDate>
+        </DatePicker>
+        <DatePicker x:Name="DateEnd" HorizontalAlignment="Left" Margin="302,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Height="24" Width="129"/>
         <TextBox x:Name="SourceDirectory" HorizontalAlignment="Left" Height="23" Margin="32,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399" RenderTransformOrigin="0.647,0.401" IsReadOnly="True" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox x:Name="TargetDirectory" HorizontalAlignment="Left" Height="23" Margin="32,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399" IsReadOnly="True" Text="{Binding TargetPath, UpdateSourceTrigger=PropertyChanged}"/>
         <Button x:Name="SourceBrowseButton" Content="..." Margin="453,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.661,0.406" Command="{Binding BrowseSourceCommand}" Height="20" HorizontalAlignment="Left" Width="31"/>

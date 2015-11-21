@@ -6,6 +6,8 @@
 
 -ErrorProvider für Fehlermeldungen verwenden
 - Siehe http://www.codeproject.com/Articles/15239/Validation-in-Windows-Presentation-Foundation
+- scheint alles andere als einfach zu sein. Habe mal Exceptions in die DatePicker Setter eingebaut und
+  die Exceptions auf zwei verschiedene Arten an die Controls gebunden.
 
 Bugfixes
 - Fehlermeldung verschwindet nicht wenn der Fehler beseitigt ist
