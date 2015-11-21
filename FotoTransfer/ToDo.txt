@@ -13,10 +13,6 @@ Bugfixes
 - Fehlermeldung verschwindet nicht wenn der Fehler beseitigt ist
 - Das tut sie jetzt, aber damit verschwindet auch die abschließende Meldung "nnn Fotos wurden kopiert"
 
-GitHub
-- wieso stimmen meine Commit Kommentare eigentlich nie?
-- üben?
-
 ---------------------------------------------------------------------------------------
 Fertiggestellt
 
@@ -54,3 +50,4 @@ Start Button erst wieder freigeben wenn die Task abgeschlossen ist.
 2015-11-21
 - Wenn kein Aufnahmedatum vorhanden ist, das Dateidatum verwenden
 - auf GitHub hochladen
+- ExifLib wieder von GitHub runtergenommen
