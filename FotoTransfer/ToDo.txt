@@ -13,6 +13,9 @@ Bugfixes
 - Fehlermeldung verschwindet nicht wenn der Fehler beseitigt ist
 - Das tut sie jetzt, aber damit verschwindet auch die abschließende Meldung "nnn Fotos wurden kopiert"
 
+GitHub
+- wieso stimmen meine Commit Kommentare eigentlich nie?
+
 ---------------------------------------------------------------------------------------
 Fertiggestellt
 
