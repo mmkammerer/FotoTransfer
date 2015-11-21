@@ -15,6 +15,7 @@ Bugfixes
 
 GitHub
 - wieso stimmen meine Commit Kommentare eigentlich nie?
+- üben?
 
 ---------------------------------------------------------------------------------------
 Fertiggestellt
