@@ -8,7 +8,8 @@ To Do
 - DatePicker Exceptions werden korrekt behandelt und wie im Beispiel angegeben mit ToolTip gemeldet
 - Für die Verzeichnis-Textboxen klappt es nicht wie gewünscht. Entweder schlägt die Exception (z.B. string.empty)
   bereits im Konstruktor des VieModel zu und wird dort nicht gefangen, oder es findet keine (neue) Validation statt
-  und der Fehler wird im GUI nicht markiert.
+  und der Fehler wird im GUI nicht markiert. Vielleicht wäre der ValidationRule Ansatz ohne Exceptions im Artikel oben
+  der besser Weg?
 
 - Exception Handler für den Kopierthread, z.B. bei Problemen mit den Zugriffsrechten
 ---------------------------------------------------------------------------------------
