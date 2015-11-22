@@ -38,6 +38,14 @@
         private DateTime endDate;
 
         /// <summary>
+        /// Error on inputs
+        /// </summary>
+        private bool startDateError;
+        private bool endDateError;
+        private bool sourcePathError;
+        private bool targetPathError;
+
+        /// <summary>
         /// The background task for file search and copy
         /// </summary>
         private Task fileHandlerTask;
@@ -48,10 +56,13 @@
         public ViewModel()
         {
             // Read initial values from user settings
-            this.SourcePath = Properties.Settings.Default.SourcePath;
-            this.TargetPath = Properties.Settings.Default.TargetPath;
+            this.sourcePath = Properties.Settings.Default.SourcePath;
+            this.targetPath = Properties.Settings.Default.TargetPath;
+
             this.EndDate = DateTime.Today;
             this.StartDate = new DateTime(2000, 1, 1);
+
+            CommandManager.InvalidateRequerySuggested();
         }
 
         /// <summary>
@@ -134,6 +145,19 @@
 
             private set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.sourcePathError = true;
+                    throw new ArgumentException("Das Quellverzeichnis ist nicht angegeben");
+                }
+
+                if (!Directory.Exists(value))
+                {
+                    this.sourcePathError = true;
+                    throw new ArgumentException("Das Quellverzeichnis existiert nicht");
+                }
+
+                this.sourcePathError = false;
                 if (this.sourcePath != value)
                 {
                     this.sourcePath = value;
@@ -155,6 +179,19 @@
 
             private set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.targetPathError = true;
+                    throw new ArgumentException("Das Zielverzeichnis ist nicht angegeben");
+                }
+
+                if (!Directory.Exists(value))
+                {
+                    this.targetPathError = true;
+                    throw new ArgumentException("Das Zielverzeichnis existiert nicht");
+                }
+
+                this.targetPathError = false;
                 if (this.targetPath != value)
                 {
                     this.targetPath = value;
@@ -211,9 +248,11 @@
             {
                 if (value > this.EndDate)
                 {
+                    startDateError = true;
                     throw new ArgumentException("Das Startdatum muss vor dem Endedatum liegen");
                 }
 
+                startDateError = false;
                 this.startDate = value;
                 this.OnPropertyChanged("StartDate");
             }
@@ -233,9 +272,11 @@
             {
                 if (value < this.StartDate)
                 {
+                    endDateError = true;
                     throw new ArgumentException("Das Endedatum muss nach dem Startdatum liegen");
                 }
 
+                endDateError = false;
                 this.endDate = value;
                 this.OnPropertyChanged("EndDate");
             }
@@ -354,37 +395,11 @@
         /// <returns>true if all entries are correct, otherwise false.</returns>
         private bool CanStart()
         {
-            if (string.IsNullOrEmpty(this.sourcePath))
+            // cannot start with input errors
+            if (this.sourcePathError || this.targetPathError || this.startDateError || this.endDateError)
             {
-                this.Information = "Das Quellverzeichnis ist nicht angegeben";
                 return false;
             }
-
-            if (!Directory.Exists(this.SourcePath))
-            {
-                this.Information = "Das Quellverzeichnis existiert nicht";
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(this.targetPath))
-            {
-                this.Information = "Das Zielverzeichnis ist nicht angegeben";
-                return false;
-            }
-
-            if (!Directory.Exists(this.targetPath))
-            {
-                this.Information = "Das Zielverzeichnis existiert nicht";
-                return false;
-            }
-
-            if (this.startDate > this.endDate)
-            {
-                this.Information = "Das Startdatum muss vor dem Endedatum liegen";
-                return false;
-            }
-
-            this.Information = string.Empty;
 
             // Greys out the start button if a background task is in progress.
             switch (this.transferState)
