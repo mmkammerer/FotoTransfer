@@ -9,8 +9,20 @@
         </Grid.ColumnDefinitions>
         <DatePicker Name="DateStart" HorizontalAlignment="Left" Margin="105,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Height="24" Width="129"/>
         <DatePicker x:Name="DateEnd" HorizontalAlignment="Left" Margin="302,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Height="24" Width="129"/>
-        <TextBox x:Name="SourceDirectory" HorizontalAlignment="Left" Height="23" Margin="32,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399" IsReadOnly="True" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
-        <TextBox x:Name="TargetDirectory" HorizontalAlignment="Left" Height="23" Margin="32,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399" IsReadOnly="True" Text="{Binding TargetPath, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+        <TextBox x:Name="SourceDirectory" HorizontalAlignment="Left" Height="23" Margin="32,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399">
+            <TextBox.Text>
+                <Binding Path="SourcePath" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:PathValidationRule PathDescription="Das Quellverzeichnis"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="TargetDirectory" HorizontalAlignment="Left" Height="23" Margin="32,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399" IsReadOnly="True">
+            <TextBox.Text>
+                <Binding Path="TargetPath" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions="True"/>
+            </TextBox.Text>
+        </TextBox>
         <Button x:Name="SourceBrowseButton" Content="..." Margin="453,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.661,0.406" Command="{Binding BrowseSourceCommand}" Height="20" HorizontalAlignment="Left" Width="31"/>
         <Button x:Name="TargetBrowseButton" Content="..." HorizontalAlignment="Left" Margin="453,104,0,0" VerticalAlignment="Top" Width="31" Command="{Binding BrowseTargetCommand}" Height="20"/>
         <Label Content="Quellverzeichnis" HorizontalAlignment="Left" Margin="32,17,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,0.496" Height="26" Width="96"/>

@@ -1,17 +1,27 @@
 ﻿---------------------------------------------------------------------------------------
+Aktueller Stand
+- SourcePath jetzt mit Validatorklasse implementiert und Textfeld direkt editierbar gemacht
+- Validierung erfolgt bei Eingabe (jedes Zeichen!), aber nicht beim Programmstart.
+
+---------------------------------------------------------------------------------------
 To Do
 
-- Drag and Drop zulassen: Einzelne Fotos auf das Fenster ziehen, die werden dann mit neuem Namen ins Zielverzeichnis kopiert
+Klären warum beim ersten Anzeigen des Dialogs keine Validierung stattfindet.
 
--ErrorProvider für Fehlermeldungen verwenden
+ErrorProvider für Fehlermeldungen verwenden
 - Siehe http://www.codeproject.com/Articles/15239/Validation-in-Windows-Presentation-Foundation
 - DatePicker Exceptions werden korrekt behandelt und wie im Beispiel angegeben mit ToolTip gemeldet
 - Für die Verzeichnis-Textboxen klappt es nicht wie gewünscht. Entweder schlägt die Exception (z.B. string.empty)
   bereits im Konstruktor des ViewModel zu und wird dort nicht gefangen, oder es findet keine (neue) Validation statt
   und der Fehler wird im GUI nicht markiert. Vielleicht wäre der ValidationRule Ansatz ohne Exceptions im Artikel oben
   der besser Weg?
+- Für eine Validation muss man eine Klasse von ValidationRule ableiten und ein override für Validate schreiben.
+  Zusätzliche Properties kann man verwenden um Validation Parameter via XAML in den Validator einzubringen. Nachteil ist wohl
+  dass es keine Möglichkeit gibt, Cross-Validations durchzuführen (so wie bei Start/Endedatum notwendig).
 
 - Exception Handler für den Kopierthread, z.B. bei Problemen mit den Zugriffsrechten
+- Drag and Drop zulassen: Einzelne Fotos auf das Fenster ziehen, die werden dann mit neuem Namen ins Zielverzeichnis kopiert
+
 ---------------------------------------------------------------------------------------
 Versionen
 

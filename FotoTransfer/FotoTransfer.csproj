@@ -59,6 +59,7 @@
     <Compile Include="CloseCommand.cs" />
     <Compile Include="ExifFile.cs" />
     <Compile Include="ExifFileHandler.cs" />
+    <Compile Include="PathValidationRule.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StartCommand.cs" />
     <Compile Include="TransferProgress.cs" />

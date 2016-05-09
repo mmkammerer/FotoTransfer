@@ -56,10 +56,15 @@
         public ViewModel()
         {
             // Read initial values from user settings
-            this.sourcePath = Properties.Settings.Default.SourcePath;
+            // TODO the reason why the internal variables are used instead of the properties is to avoid exceptions
+            //      from the setters here in the constructor. This may not be the best way of doing it?!
+            //      A usual scenario could be where the target path has been removed, e.g. by removing the USB stick.
+            this.SourcePath = Properties.Settings.Default.SourcePath;
             this.targetPath = Properties.Settings.Default.TargetPath;
 
-            // because end date cannot be before start date, we have to set end date *before* start date here:
+            // NOTE: The setters throw exceptions if start is not after end. Initially both values are set to
+            //       DateTime.MinValue, so we have to set end first (it will still be after start = min), 
+            //       and set start afterwards to maintain the correct time order.
             this.EndDate = Properties.Settings.Default.EndDate;
             if (this.EndDate == DateTime.MinValue)
             {
@@ -158,13 +163,11 @@
                 if (string.IsNullOrEmpty(value))
                 {
                     this.sourcePathError = true;
-                    throw new ArgumentException("Das Quellverzeichnis ist nicht angegeben");
                 }
 
                 if (!Directory.Exists(value))
                 {
                     this.sourcePathError = true;
-                    throw new ArgumentException("Das Quellverzeichnis existiert nicht");
                 }
 
                 this.sourcePathError = false;
