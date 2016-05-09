@@ -60,7 +60,11 @@
             this.targetPath = Properties.Settings.Default.TargetPath;
 
             // because end date cannot be before start date, we have to set end date *before* start date here:
-            this.EndDate = DateTime.Today;
+            this.EndDate = Properties.Settings.Default.EndDate;
+            if (this.EndDate == DateTime.MinValue)
+            {
+                this.EndDate = DateTime.Today;
+            }
 
             this.StartDate = Properties.Settings.Default.StartDate;
             if (this.StartDate == DateTime.MinValue)
@@ -285,6 +289,7 @@
 
                 endDateError = false;
                 this.endDate = value;
+                Properties.Settings.Default.EndDate = value;
                 this.OnPropertyChanged("EndDate");
             }
         }

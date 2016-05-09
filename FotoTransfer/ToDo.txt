@@ -7,7 +7,7 @@ To Do
 - Siehe http://www.codeproject.com/Articles/15239/Validation-in-Windows-Presentation-Foundation
 - DatePicker Exceptions werden korrekt behandelt und wie im Beispiel angegeben mit ToolTip gemeldet
 - Für die Verzeichnis-Textboxen klappt es nicht wie gewünscht. Entweder schlägt die Exception (z.B. string.empty)
-  bereits im Konstruktor des VieModel zu und wird dort nicht gefangen, oder es findet keine (neue) Validation statt
+  bereits im Konstruktor des ViewModel zu und wird dort nicht gefangen, oder es findet keine (neue) Validation statt
   und der Fehler wird im GUI nicht markiert. Vielleicht wäre der ValidationRule Ansatz ohne Exceptions im Artikel oben
   der besser Weg?
 
@@ -15,11 +15,11 @@ To Do
 ---------------------------------------------------------------------------------------
 Versionen
 
-2016-05-09: V 01.10
+2016-05-09: Version 01.10
 - Fortschrittsbalken auch beim Suchen nach Fotos
-- Startdatum in den Settings merken. Endedatum ist das aktuelle Datum
+- Start- und Endedatum in den Settings merken
 
-in 2015: V 01.00
+in 2015: Version 01.00
 - Settings, letzte Einstellungen merken
 - Hilfsklasse für EXIF Extraktion
 - Start Aktion codieren
