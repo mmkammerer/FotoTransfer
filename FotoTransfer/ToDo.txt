@@ -13,12 +13,17 @@ To Do
 
 - Exception Handler für den Kopierthread, z.B. bei Problemen mit den Zugriffsrechten
 ---------------------------------------------------------------------------------------
-Fertiggestellt
+Versionen
 
-Settings, letzte Einstellungen merken
-Hilfsklasse für EXIF Extraktion
-Start Aktion codieren
-BrowserDialog zeigt selektierten Pfad an
+2016-05-09: V 01.10
+- Fortschrittsbalken auch beim Suchen nach Fotos
+- Startdatum in den Settings merken. Endedatum ist das aktuelle Datum
+
+in 2015: V 01.00
+- Settings, letzte Einstellungen merken
+- Hilfsklasse für EXIF Extraktion
+- Start Aktion codieren
+- BrowserDialog zeigt selektierten Pfad an
 
 Start erst freigeben wenn die Felder korrekt ausgefüllt sind
 - Source + Target Dir existieren

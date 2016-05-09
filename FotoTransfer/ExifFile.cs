@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using System.Windows.Media.Imaging;
     using ExifLib;
+    using System.Diagnostics;
 
     /// <summary>
     /// Class for a file with EXIF information
@@ -107,9 +108,10 @@
                 this.NewFileName = string.Format("IMG_{0}{1}.jpg", dateTakenIso, suffix);
                 return true;
             }
-            catch (ExifLibException)
+            catch (ExifLibException e)
             {
                 // e.g. if no EXIF information is present at all
+                Debug.WriteLine("{0} in Datei {1}: {2}", e.GetType().Name, this.OriginalFileName, e.Message);
                 return false;
             }
             finally

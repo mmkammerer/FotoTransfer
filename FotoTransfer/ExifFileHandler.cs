@@ -12,6 +12,7 @@ namespace FotoTransfer
     using System.Threading.Tasks;
 
     using ExifLib;
+    using System.Diagnostics;
 
     /// <summary>
     /// A class that can find and copy JPG files based on the date when the photo was taken
@@ -57,20 +58,25 @@ namespace FotoTransfer
             DateTime minTime = startTime.Date;
             DateTime maxTime = endTime.Date + TimeSpan.FromDays(1);
 
-            this.transferProgress.State = TransferState.Searching;
-            this.transferProgress.ProgressInfo = "Suche Fotos ...";
-            progress.Report(this.transferProgress);
-
             this.files = new List<ExifFile>();
             int filesFound = 0;
 
-            foreach (string file in Directory.EnumerateFiles(sourcePath, "*.jpg", SearchOption.AllDirectories))
-            {
+            var allFiles = Directory.GetFiles(sourcePath, "*.jpg", SearchOption.AllDirectories);
+            var totalFiles = allFiles.Length;
+            int filesSearched = 0;
+            double lastPercentageReported = 0.0;
+            bool updateReport;
 
+            this.transferProgress.State = TransferState.Searching;
+            this.transferProgress.ProgressInfo = string.Format("Suche über {0} Fotos ...", totalFiles);
+            progress.Report(this.transferProgress);
+
+            foreach (string file in allFiles)
+            {
 #if SLEEP_FOR_DEBUG
                 System.Threading.Thread.Sleep(100);
 #endif
-
+                updateReport = false;
                 ExifFile exifFile = new ExifFile(file);
                 if (exifFile.ReadMetaDataExifLib())
                 {
@@ -79,8 +85,21 @@ namespace FotoTransfer
                         files.Add(exifFile);
                         filesFound++;
                         this.transferProgress.ProgressInfo = string.Format("{0} Foto{1} gefunden ...", filesFound, filesFound == 1 ? string.Empty : "s");
-                        progress.Report(this.transferProgress);
+                        updateReport = true;
                     }
+                }
+
+                filesSearched++;
+                this.transferProgress.Percentage = filesSearched * 100.0 / totalFiles;
+                if (this.transferProgress.Percentage - lastPercentageReported >= 1.0)
+                {
+                    updateReport = true;
+                }
+
+                if (updateReport)
+                {
+                    progress.Report(this.transferProgress);
+                    lastPercentageReported = Math.Floor(this.transferProgress.Percentage);
                 }
             }
 
