@@ -11,16 +11,20 @@
         <DatePicker x:Name="DateEnd" HorizontalAlignment="Left" Margin="302,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Height="24" Width="129"/>
         <TextBox x:Name="SourceDirectory" HorizontalAlignment="Left" Height="23" Margin="32,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399">
             <TextBox.Text>
-                <Binding Path="SourcePath" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="SourcePath">
                     <Binding.ValidationRules>
-                        <local:PathValidationRule PathDescription="Das Quellverzeichnis"/>
+                        <local:PathValidationRule PathDescription="Das Quellverzeichnis" ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox x:Name="TargetDirectory" HorizontalAlignment="Left" Height="23" Margin="32,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399" IsReadOnly="True">
+        <TextBox x:Name="TargetDirectory" HorizontalAlignment="Left" Height="23" Margin="32,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399">
             <TextBox.Text>
-                <Binding Path="TargetPath" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions="True"/>
+                <Binding Path="TargetPath">
+                    <Binding.ValidationRules>
+                        <local:PathValidationRule PathDescription="Das Zielverzeichnis" ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
             </TextBox.Text>
         </TextBox>
         <Button x:Name="SourceBrowseButton" Content="..." Margin="453,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.661,0.406" Command="{Binding BrowseSourceCommand}" Height="20" HorizontalAlignment="Left" Width="31"/>

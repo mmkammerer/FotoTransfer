@@ -76,8 +76,6 @@
             {
                 this.StartDate = DateTime.Today;
             }
-
-            CommandManager.InvalidateRequerySuggested();
         }
 
         /// <summary>
@@ -160,14 +158,10 @@
 
             private set
             {
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value) || !Directory.Exists(value))
                 {
                     this.sourcePathError = true;
-                }
-
-                if (!Directory.Exists(value))
-                {
-                    this.sourcePathError = true;
+                    return;
                 }
 
                 this.sourcePathError = false;
