@@ -68,7 +68,7 @@ namespace FotoTransfer
             bool updateReport;
 
             this.transferProgress.State = TransferState.Searching;
-            this.transferProgress.ProgressInfo = string.Format("Suche über {0} Fotos ...", totalFiles);
+            this.transferProgress.ProgressInfo = string.Format("Durchsuche {0} Fotos ...", totalFiles);
             progress.Report(this.transferProgress);
 
             foreach (string file in allFiles)
@@ -82,7 +82,7 @@ namespace FotoTransfer
                 {
                     if (exifFile.Taken >= minTime && exifFile.Taken < maxTime)
                     {
-                        files.Add(exifFile);
+                        this.files.Add(exifFile);
                         filesFound++;
                         this.transferProgress.ProgressInfo = string.Format("{0} Foto{1} gefunden ...", filesFound, filesFound == 1 ? string.Empty : "s");
                         updateReport = true;
