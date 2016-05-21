@@ -1,19 +1,29 @@
 ﻿---------------------------------------------------------------------------------------
-Aktueller Stand
-
-2016-05-16
-
----------------------------------------------------------------------------------------
 To Do
 
 - Bei Fehlern in Source/Target Path wird der Start Button nicht deaktiviert
 - Exception Handler für den Kopierthread, z.B. bei Problemen mit den Zugriffsrechten
-- Drag and Drop zulassen: Einzelne Fotos auf das Fenster ziehen, die werden dann mit neuem Namen ins Zielverzeichnis kopiert
-- Option "Originalnamen behalten" (vielleicht nur Kameratyp anhängen, um Überschreiben zu vermeiden?)
-- JetBrains Annotations per NuGet einbinden
+- JetBrains Annotations per NuGet einbinden. Rausfinden ob die EXE eine Abhängigkeit auf die JetBrains DLL hat.
+  Man kann die Anwendung starten ohne dass die DLL da ist.
+
+---------------------------------------------------------------------------------------
+Aktueller Stand
+
+2016-05-21
+- Die Idee mit den Validation Methoden ist ja nicht schlecht, aber wenn die Validation fehlschlägt,
+  dann wird die entsprechende Property im ViewModel nicht gesetzt. Dann wird aber auch das Fehlerflag
+  nicht gesetzt und der Start Button bleibt aktiviert.
+- Das ViewModel kennt die UI Elemente nicht (d.h. soll sie nicht kennen) und kann sie daher nicht abfragen.
+  Wie bekommt das ViewModel denn jetzt mit, dass SourcePath fehlerhaft ist?
+  Die Validation Methode kann ja nicht nach draußen telefonieren?
 
 ---------------------------------------------------------------------------------------
 Versionen
+
+2016-05-21: Version 01.12
+- Option "Originalnamen behalten"
+- Drag and Drop zulassen: Einzelne Fotos auf das Fenster ziehen, die werden dann mit neuem Namen ins Zielverzeichnis kopiert.
+  Funktioniert auch für mehrere Dateien und für Verzeichnisse.
 
 2016-05-16: Version 01.11
 - Stackoverflow hat die Lösung für die Validation gleich beim Start der Applikation, und nicht erst wenn sich

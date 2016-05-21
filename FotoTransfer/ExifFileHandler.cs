@@ -1,8 +1,4 @@
-﻿
-// inserts a small sleep after each file to test the progress bar and info output
-// #define SLEEP_FOR_DEBUG
-
-namespace FotoTransfer
+﻿namespace FotoTransfer
 {
     using System;
     using System.Collections.Generic;
@@ -13,6 +9,7 @@ namespace FotoTransfer
 
     using ExifLib;
     using System.Diagnostics;
+    using JetBrains.Annotations;
 
     /// <summary>
     /// A class that can find and copy JPG files based on the date when the photo was taken
@@ -24,14 +21,38 @@ namespace FotoTransfer
         private TransferProgress transferProgress = new TransferProgress();
 
         /// <summary>
+        /// Copies a single file to the target path.
+        /// </summary>
+        /// <param name="sourceFile">The source path and file name.</param>
+        /// <param name="targetPath">The target path.</param>
+        /// <param name="keepOriginalFileName">If true, the original file name is used, otherwise the file name is replaced by a time stamp.</param>
+        /// <returns>true if the file was copied, otherwise false.</returns>
+        public bool CopySingleFile([NotNull]string sourceFile, [NotNull]string targetPath, bool keepOriginalFileName)
+        {
+            if (!File.Exists(sourceFile))
+            {
+                return false;
+            }
+
+            var exifFile = new ExifFile(sourceFile);
+            if (!exifFile.ReadMetaDataExifLib())
+            {
+                return false;
+            }
+
+            return this.CopyExifFile(exifFile, targetPath, keepOriginalFileName);
+        }
+
+        /// <summary>
         /// Finds the files in the specified date range in sourcePath and copies them to targetPath
         /// </summary>
         /// <param name="sourcePath">The source path.</param>
         /// <param name="targetPath">The target path.</param>
         /// <param name="startTime">The start date and time.</param>
         /// <param name="endTime">The end date and time.</param>
+        /// <param name="keepOriginalFileName">If true, the original file name is used, otherwise the file name is replaced by a time stamp.</param>
         /// <param name="progress">The progress handler.</param>
-        public void FindAndCopyFiles(string sourcePath, string targetPath, DateTime startTime, DateTime endTime, IProgress<TransferProgress> progress)
+        public void FindAndCopyFiles([NotNull]string sourcePath, [NotNull]string targetPath, DateTime startTime, DateTime endTime, bool keepOriginalFileName, IProgress<TransferProgress> progress)
         {
             int numFiles = this.FindFiles(sourcePath, startTime, endTime, progress);
             if (numFiles == 0)
@@ -42,7 +63,7 @@ namespace FotoTransfer
                 return;
             }
 
-            this.CopyFiles(targetPath, progress);
+            this.CopyFiles(targetPath, keepOriginalFileName, progress);
         }
 
         /// <summary>
@@ -53,7 +74,7 @@ namespace FotoTransfer
         /// <param name="endTime">The end date and time.</param>
         /// <param name="progress">The progress handler.</param>
         /// <returns>The number of files found.</returns>
-        private int FindFiles(string sourcePath, DateTime startTime, DateTime endTime, IProgress<TransferProgress> progress)
+        private int FindFiles([NotNull]string sourcePath, DateTime startTime, DateTime endTime, IProgress<TransferProgress> progress)
         {
             DateTime minTime = startTime.Date;
             DateTime maxTime = endTime.Date + TimeSpan.FromDays(1);
@@ -73,9 +94,6 @@ namespace FotoTransfer
 
             foreach (string file in allFiles)
             {
-#if SLEEP_FOR_DEBUG
-                System.Threading.Thread.Sleep(100);
-#endif
                 updateReport = false;
                 ExifFile exifFile = new ExifFile(file);
                 if (exifFile.ReadMetaDataExifLib())
@@ -110,8 +128,9 @@ namespace FotoTransfer
         /// Copies the files that have been searched before to the target path using the new file names.
         /// </summary>
         /// <param name="targetPath">The target path.</param>
+        /// <param name="keepOriginalFileName">If true, the original file name is used, otherwise the file name is replaced by a time stamp.</param>
         /// <param name="progress">The progress handler.</param>
-        private void CopyFiles(string targetPath, IProgress<TransferProgress> progress)
+        private void CopyFiles(string targetPath, bool keepOriginalFileName, IProgress<TransferProgress> progress)
         {
             int totalFiles = this.files.Count;
             int filesCopied = 0;
@@ -120,16 +139,7 @@ namespace FotoTransfer
 
             foreach (var exifFile in this.files)
             {
-#if SLEEP_FOR_DEBUG
-                System.Threading.Thread.Sleep(100);
-#endif
-
-                string sourceFileName = exifFile.OriginalFileName;
-                string targetFileName = Path.Combine(targetPath, exifFile.NewFileName);
-                if (!File.Exists(targetFileName))
-                {
-                    File.Copy(sourceFileName, targetFileName);
-                }
+                this.CopyExifFile(exifFile, targetPath, keepOriginalFileName);
 
                 filesCopied++;
                 this.transferProgress.ProgressInfo = string.Format("{0} von {1} Fotos kopiert ...", filesCopied, totalFiles);
@@ -142,5 +152,35 @@ namespace FotoTransfer
             this.transferProgress.State = TransferState.Done;
             progress.Report(this.transferProgress);
         }
+
+        /// <summary>
+        /// Copies a single exif File to the target path.
+        /// </summary>
+        /// <param name="exifFile">The exif source file.</param>
+        /// <param name="targetPath">The target path.</param>
+        /// <param name="keepOriginalFileName">If true, the original file name is used, otherwise the file name is replaced by a time stamp.</param>
+        /// <returns>true if the file was copied, otherwise false.</returns>
+        private bool CopyExifFile(ExifFile exifFile, string targetPath, bool keepOriginalFileName)
+        {
+            string sourceFileName = exifFile.OriginalFileName;
+            string targetFileName;
+            if (keepOriginalFileName)
+            {
+                targetFileName = Path.Combine(targetPath, Path.GetFileName(sourceFileName));
+            }
+            else
+            {
+                targetFileName = Path.Combine(targetPath, exifFile.NewFileName);
+            }
+
+            if (!File.Exists(targetFileName))
+            {
+                File.Copy(sourceFileName, targetFileName);
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

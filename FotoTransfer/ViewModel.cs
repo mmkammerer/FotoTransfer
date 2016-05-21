@@ -1,5 +1,6 @@
 ﻿namespace FotoTransfer
 {
+    using JetBrains.Annotations;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -56,13 +57,10 @@
         public ViewModel()
         {
             // Read initial values from user settings
-            // TODO the reason why the internal variables are used instead of the properties is to avoid exceptions
-            //      from the setters here in the constructor. This may not be the best way of doing it?!
-            //      A usual scenario could be where the target path has been removed, e.g. by removing the USB stick.
             this.SourcePath = Properties.Settings.Default.SourcePath;
             this.targetPath = Properties.Settings.Default.TargetPath;
 
-            // NOTE: The setters throw exceptions if start is not after end. Initially both values are set to
+            // NOTE: The date setters throw exceptions if start is not after end. Initially both values are set to
             //       DateTime.MinValue, so we have to set end first (it will still be after start = min), 
             //       and set start afterwards to maintain the correct time order.
             this.EndDate = Properties.Settings.Default.EndDate;
@@ -203,6 +201,15 @@
         }
 
         /// <summary>
+        /// Gets or sets an indication whether the copy operation should keep the original file name
+        /// </summary>
+        public bool KeepOriginalFileName
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets the information (bound to the information text box)
         /// </summary>
         public string Information
@@ -285,6 +292,44 @@
             }
         }
 
+        /// <summary>
+        /// The drag-and-drop handler
+        /// </summary>
+        /// <param name="droppedFiles">The files to copy.</param>
+        public void DropFiles(IEnumerable<string> droppedFiles)
+        {
+            var exifHandler = new ExifFileHandler();
+            int numFiles = 0;
+
+            this.Information = "Kopiere Drag-and-drop Dateien";
+
+            foreach(string source in droppedFiles)
+            {
+                string[] sourceFiles;
+
+                if (Directory.Exists(source))
+                {
+                    sourceFiles = Directory.GetFiles(source, "*.jpg", SearchOption.AllDirectories);
+                }
+                else
+                {
+                    // a single file
+                    sourceFiles = new string[1];
+                    sourceFiles[0] = source;
+                }
+
+                foreach(string sourceFile in sourceFiles)
+                {
+                    if (exifHandler.CopySingleFile(sourceFile, this.targetPath, this.KeepOriginalFileName))
+                    {
+                        numFiles++;
+                    }
+
+                    this.Information = string.Format("{0} Datei{1} wurden kopiert", numFiles, numFiles == 1 ? string.Empty : "en");
+                }
+            }
+        }
+
         #region Default INotifyPropertyChanged implementation
     
         // The event that can be fired if a property has changed
@@ -360,7 +405,7 @@
         {
             this.Information = "Fotos werden gesucht...";
 
-            ExifFileHandler handler = new ExifFileHandler();
+            var handler = new ExifFileHandler();
 
             // The progress object is passed to the worker thread. It updates the Information property
             // and thus raises a propertyChanged event which is used to display the background worker progress.
@@ -370,14 +415,14 @@
             // The progress handler is passed down to the method executed in the background thread of the task.
             // By a miracle the progress information is tunneled through the threads and triggers an update of the
             // information text in the GUI.
-            this.fileHandlerTask = Task.Factory.StartNew(() => handler.FindAndCopyFiles(this.sourcePath, this.targetPath, this.startDate, this.endDate, progress));
+            this.fileHandlerTask = Task.Factory.StartNew(() => handler.FindAndCopyFiles(this.sourcePath, this.targetPath, this.startDate, this.endDate, this.KeepOriginalFileName, progress));
         }
 
         /// <summary>
         /// The handler for progress information
         /// </summary>
         /// <param name="progress">The progress object</param>
-        private void ProgressHandler(TransferProgress progress)
+        private void ProgressHandler([NotNull]TransferProgress progress)
         {
             this.Information = progress.ProgressInfo;
             this.ProgressPercentage = progress.Percentage;
