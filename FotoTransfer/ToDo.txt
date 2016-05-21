@@ -6,8 +6,11 @@ Aktueller Stand
 ---------------------------------------------------------------------------------------
 To Do
 
+- Bei Fehlern in Source/Target Path wird der Start Button nicht deaktiviert
 - Exception Handler für den Kopierthread, z.B. bei Problemen mit den Zugriffsrechten
 - Drag and Drop zulassen: Einzelne Fotos auf das Fenster ziehen, die werden dann mit neuem Namen ins Zielverzeichnis kopiert
+- Option "Originalnamen behalten" (vielleicht nur Kameratyp anhängen, um Überschreiben zu vermeiden?)
+- JetBrains Annotations per NuGet einbinden
 
 ---------------------------------------------------------------------------------------
 Versionen

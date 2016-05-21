@@ -186,16 +186,10 @@
 
             private set
             {
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value) || !Directory.Exists(value))
                 {
                     this.targetPathError = true;
-                    throw new ArgumentException("Das Zielverzeichnis ist nicht angegeben");
-                }
-
-                if (!Directory.Exists(value))
-                {
-                    this.targetPathError = true;
-                    throw new ArgumentException("Das Zielverzeichnis existiert nicht");
+                    return;
                 }
 
                 this.targetPathError = false;
