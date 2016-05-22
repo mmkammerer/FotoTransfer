@@ -19,6 +19,8 @@ Aktueller Stand
 
 ---------------------------------------------------------------------------------------
 Versionen
+2016-05-22: Version 01.13
+- ExifLib wird jetzt per NuGet eingebunden.
 
 2016-05-21: Version 01.12
 - Option "Originalnamen behalten"
