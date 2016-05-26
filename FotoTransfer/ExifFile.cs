@@ -17,11 +17,13 @@
     {
         private static readonly Dictionary<string, string> cameraModelDictionary = new Dictionary<string,string>()
         {
-            { "PowerShot SX120 IS", "PS"},
-            { "IXUS 130", "X3"},
-            { "IXUS 170", "X7"},
-            { "XT1039", "MG"},
-            { "W890i", "W8"}
+            { "Canon PowerShot SX120 IS", "PS"}, // Micha
+            { "Canon EOS 450D", "FH" },          // Fabian
+            { "Canon IXUS 130", "X3"},           // Christiane, alte Kamera
+            { "Canon IXUS 170", "X7"},           // Christiane
+            { "XT1039", "MG"},                   // MOTO G, Micha und Christiane
+            { "W890i", "W8"},                    // Sony Ericsson Handy Micha
+            { "iPhone 5", "i5" }                 // iPhone Fabian, Theresa
         };
 
         /// <summary>
@@ -44,33 +46,14 @@
         public string OriginalFileName { get; private set; }
 
         /// <summary>
-        /// The new file name (without path)
+        /// The new file name (without path) consisting of a time stamp and a camera model appendix
         /// </summary>
         public string NewFileName { get; private set; }
 
         /// <summary>
-        /// Reads the meta data using windows bitmap methods (slow)
+        /// The new file name (without path) consisting of the old name plus a camera model appendix
         /// </summary>
-        /// <returns>true if date and camera model could be read from the file, otherwise false</returns>
-        [Obsolete]
-        public bool ReadMetaDataBitmap()
-        {
-            BitmapSource img = BitmapFrame.Create(new Uri(this.OriginalFileName, UriKind.Absolute));
-            BitmapMetadata meta = (BitmapMetadata)img.Metadata;
-            if (meta.DateTaken == null || meta.CameraModel == null)
-            {
-                return false;
-            }
-
-            this.Taken = DateTime.Parse(meta.DateTaken);
-            string dateTakenIso = this.Taken.ToString("yyyyMMdd_HHmmss");
- 
-            string entry = cameraModelDictionary.FirstOrDefault(e => meta.CameraModel.IndexOf(e.Key, StringComparison.OrdinalIgnoreCase) >= 0).Value;
-            string suffix = string.IsNullOrEmpty(entry) ? string.Empty : "_" + entry;
-
-            this.NewFileName = string.Format("IMG_{0}{1}.jpg", dateTakenIso, suffix);
-            return true;
-        }
+        public string NearlyOriginalFileName { get; private set; }
 
         /// <summary>
         /// Reads the meta data using ExifLib (much more faster!)
@@ -104,8 +87,9 @@
                     suffix = string.IsNullOrEmpty(entry) ? string.Empty : "_" + entry;
                 }
 
-
                 this.NewFileName = string.Format("IMG_{0}{1}.jpg", dateTakenIso, suffix);
+                this.NearlyOriginalFileName = string.Format("{0}{1}.jpg", Path.GetFileNameWithoutExtension(this.OriginalFileName), suffix);
+                
                 return true;
             }
             catch (ExifLibException e)

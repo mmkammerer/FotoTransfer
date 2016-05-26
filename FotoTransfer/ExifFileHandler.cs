@@ -164,14 +164,7 @@
         {
             string sourceFileName = exifFile.OriginalFileName;
             string targetFileName;
-            if (keepOriginalFileName)
-            {
-                targetFileName = Path.Combine(targetPath, Path.GetFileName(sourceFileName));
-            }
-            else
-            {
-                targetFileName = Path.Combine(targetPath, exifFile.NewFileName);
-            }
+            targetFileName = Path.Combine(targetPath, keepOriginalFileName ? exifFile.NearlyOriginalFileName : exifFile.NewFileName);
 
             if (!File.Exists(targetFileName))
             {

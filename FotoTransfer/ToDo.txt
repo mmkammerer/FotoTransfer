@@ -9,6 +9,10 @@ To Do
 ---------------------------------------------------------------------------------------
 Aktueller Stand
 
+2016-05-26
+- ExifFile erzeugt einen "NearlyOriginalFileName" aus dem Originalnamen und einem Modell-Suffix.
+- Liste der Kameramodelle und Suffixe erweitert.
+
 2016-05-21
 - Die Idee mit den Validation Methoden ist ja nicht schlecht, aber wenn die Validation fehlschlägt,
   dann wird die entsprechende Property im ViewModel nicht gesetzt. Dann wird aber auch das Fehlerflag
