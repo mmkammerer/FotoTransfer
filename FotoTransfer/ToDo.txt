@@ -1,10 +1,8 @@
 ﻿---------------------------------------------------------------------------------------
 To Do
 
-- Bei Fehlern in Source/Target Path wird der Start Button nicht deaktiviert
+- Bei Fehlern in Source/Target Path wird der Start Button (immer noch) nicht deaktiviert
 - Exception Handler für den Kopierthread, z.B. bei Problemen mit den Zugriffsrechten
-- JetBrains Annotations per NuGet einbinden. Rausfinden ob die EXE eine Abhängigkeit auf die JetBrains DLL hat.
-  Man kann die Anwendung starten ohne dass die DLL da ist.
 
 ---------------------------------------------------------------------------------------
 Aktueller Stand
@@ -24,7 +22,7 @@ Aktueller Stand
 ---------------------------------------------------------------------------------------
 Versionen
 2016-05-22: Version 01.13
-- ExifLib wird jetzt per NuGet eingebunden.
+- ExifLib wird jetzt per NuGet eingebunden (hat halt den Nachteil dass man nicht reindebuggenkann).
 
 2016-05-21: Version 01.12
 - Option "Originalnamen behalten"
