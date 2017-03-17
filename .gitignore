@@ -154,3 +154,12 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+
+# ExifLib Source Code
+Exiflib/
+
+# Sonargraph analysis
+FotoTransfer.sonargraph/
+
+# nuGet Packages
+packages/
