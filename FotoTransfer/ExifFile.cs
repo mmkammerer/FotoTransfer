@@ -23,7 +23,8 @@
             { "Canon IXUS 170", "X7"},           // Christiane
             { "XT1039", "MG"},                   // MOTO G, Micha und Christiane
             { "W890i", "W8"},                    // Sony Ericsson Handy Micha
-            { "iPhone 5", "i5" }                 // iPhone Fabian, Theresa
+            { "iPhone 5", "i5" },                // iPhone Fabian, Theresa
+            { "iPhone 6", "i6" }                 // iPhone Theresa
         };
 
         /// <summary>
@@ -70,7 +71,7 @@
                 DateTime taken;
                 if (!exifReader.GetTagValue<DateTime>(ExifTags.DateTimeOriginal, out taken))
                 {
-                    // If date is not contained in the EXIF information use the file modified date (LastWriteTime).
+                    // If date/time taken is not contained in the EXIF information use the file modified date (LastWriteTime).
                     // This is usually the time the file was saved in the camera
                     FileInfo fi = new FileInfo(this.OriginalFileName);
                     taken = fi.LastWriteTime;
