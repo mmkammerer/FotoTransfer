@@ -24,7 +24,8 @@
             { "XT1039", "MG"},                   // MOTO G, Micha und Christiane
             { "W890i", "W8"},                    // Sony Ericsson Handy Micha
             { "iPhone 5", "i5" },                // iPhone Fabian, Theresa
-            { "iPhone 6", "i6" }                 // iPhone Theresa
+            { "iPhone 6", "i6" },                // iPhone Theresa
+            { "SM-G800F", "s5m" }                // Samsung S5 mini Christiane
         };
 
         /// <summary>
