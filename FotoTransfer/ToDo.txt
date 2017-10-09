@@ -4,6 +4,7 @@ To Do
 - Bei Fehlern in Source/Target Path wird der Start Button (immer noch) nicht deaktiviert
 - Exception Handler für den Kopierthread, z.B. bei Problemen mit den Zugriffsrechten
 - Originalnamen beibehalten hängt trotzdem die Kamera-Extension an
+  (Scheint ein Feature und kein Bug zu sein => NearlyOriginalFileName)
 
 ---------------------------------------------------------------------------------------
 Aktueller Stand
