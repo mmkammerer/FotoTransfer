@@ -25,7 +25,8 @@
             { "W890i", "W8"},                    // Sony Ericsson Handy Micha
             { "iPhone 5", "i5" },                // iPhone Fabian, Theresa
             { "iPhone 6", "i6" },                // iPhone Theresa
-            { "SM-G800F", "s5m" }                // Samsung S5 mini Christiane
+            { "SM-G800F", "s5m" },               // Samsung S5 mini Christiane
+            { "ONE A2003", "OP2" }               // OnePlus Two Christiane
         };
 
         /// <summary>
