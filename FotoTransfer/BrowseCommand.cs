@@ -1,7 +1,6 @@
 ﻿namespace FotoTransfer
 {
     using System;
-    using System.Windows;
     using System.Windows.Forms;
     using System.Windows.Input;
 
@@ -13,7 +12,7 @@
         /// <summary>
         /// The browse action, passed in the constructor
         /// </summary>
-        private Action<string> execute;
+        private readonly Action<string> execute;
 
         private string path = string.Empty;
 
@@ -34,19 +33,18 @@
         /// <param name="parameter">Not used, but required by the interface.</param>
         public void Execute(object parameter)
         {
-            var dialog = new FolderBrowserDialog();
-            dialog.ShowNewFolderButton = true;
-            dialog.SelectedPath = this.path;
+            var dialog = new FolderBrowserDialog
+            {
+                ShowNewFolderButton = true,
+                SelectedPath = this.path
+            };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 this.path = dialog.SelectedPath;
             }
 
-            if (this.execute != null)
-            {
-                this.execute(this.path);
-            }
+            this.execute?.Invoke(this.path);
         }
 
         /// <summary>

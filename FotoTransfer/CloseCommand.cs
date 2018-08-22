@@ -11,7 +11,7 @@
         /// <summary>
         /// The close action, passed in the constructor
         /// </summary>
-        private Action<object> execute;
+        private readonly Action<object> execute;
 
         /// <summary>
         /// Creates a new instance of the close command
@@ -28,10 +28,7 @@
         /// <param name="parameter">Not used, but required by the interface.</param>
         public void Execute(object parameter)
         {
-            if (this.execute != null)
-            {
-                this.execute(parameter);
-            }
+            this.execute?.Invoke(parameter);
         }
 
         /// <summary>

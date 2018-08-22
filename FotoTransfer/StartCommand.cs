@@ -1,8 +1,6 @@
 ﻿namespace FotoTransfer
 {
     using System;
-    using System.Windows;
-    using System.Windows.Forms;
     using System.Windows.Input;
 
     /// <summary>
@@ -13,12 +11,12 @@
         /// <summary>
         /// The start action, passed in the constructor
         /// </summary>
-        private Action execute;
+        private readonly Action execute;
 
         /// <summary>
         /// The query if the command can execute
         /// </summary>
-        private Func<bool> canExecute;
+        private readonly Func<bool> canExecute;
 
         /// <summary>
         /// Creates a new instance of the start command
@@ -37,10 +35,7 @@
         /// <param name="parameter">Not used, but required by the interface.</param>
         public void Execute(object parameter)
         {
-            if (this.execute != null)
-            {
-                this.execute();
-            }
+            this.execute?.Invoke();
         }
 
         /// <summary>

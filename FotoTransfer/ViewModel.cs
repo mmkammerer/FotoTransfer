@@ -3,15 +3,10 @@
     using JetBrains.Annotations;
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.IO;
-    using System.Linq;
     using System.Runtime.CompilerServices;
-    using System.Text;
     using System.Threading.Tasks;
-    using System.Windows.Forms;
     using System.Windows.Input;
 
     /// <summary>
@@ -242,6 +237,7 @@
                 }
             }
         }
+
         /// <summary>
         /// Gets the start date (bound to the start date picker)
         /// </summary>
@@ -330,8 +326,6 @@
             }
         }
 
-        #region Default INotifyPropertyChanged implementation
-    
         // The event that can be fired if a property has changed
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -341,15 +335,8 @@
         /// <param name="propertyName">The property name.</param>
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        #endregion
-
-        #region RequestClose [event]
 
         /// <summary>
         /// Raised when this workspace should be removed from the UI.
@@ -365,16 +352,8 @@
         /// </remarks>
         private void OnRequestClose()
         {
-            EventHandler handler = this.RequestClose;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
+            this.RequestClose?.Invoke(this, EventArgs.Empty);
         }
-
-        #endregion // RequestClose [event]
-
-        #region Browse
 
         /// <summary>
         /// Sets the source path (bound to the source path browse command)
@@ -393,10 +372,6 @@
         {
             this.TargetPath = path;
         }
-
-        #endregion
-
-        #region Start
 
         /// <summary>
         /// The start action
@@ -459,7 +434,5 @@
 
             return true;
         }
-
-        #endregion
     }
 }
