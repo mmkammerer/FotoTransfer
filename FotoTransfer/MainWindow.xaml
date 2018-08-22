@@ -5,11 +5,12 @@
         Title="Foto Transfer" Height="372.222" Width="525" ResizeMode="CanMinimize" Closing="OnClosing" Drop="OnDrop" AllowDrop="True" DragOver="OnDragOver">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="23*"/>
+            <ColumnDefinition Width="496*"/>
         </Grid.ColumnDefinitions>
-        <DatePicker Name="DateStart" HorizontalAlignment="Left" Margin="105,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Height="24" Width="129"/>
-        <DatePicker x:Name="DateEnd" HorizontalAlignment="Left" Margin="302,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Height="24" Width="129"/>
-        <TextBox x:Name="SourceDirectory" HorizontalAlignment="Left" Height="23" Margin="32,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399">
+        <DatePicker Name="DateStart" HorizontalAlignment="Left" Margin="82,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Height="24" Width="129" Grid.Column="1"/>
+        <DatePicker x:Name="DateEnd" HorizontalAlignment="Left" Margin="279,180,0,0" VerticalAlignment="Top" SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Height="24" Width="129" Grid.Column="1"/>
+        <TextBox x:Name="SourceDirectory" HorizontalAlignment="Left" Height="23" Margin="9,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399" IsReadOnly="True" Grid.Column="1">
             <TextBox.Text>
                 <Binding Path="SourcePath">
                     <Binding.ValidationRules>
@@ -18,7 +19,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBox x:Name="TargetDirectory" HorizontalAlignment="Left" Height="23" Margin="32,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399">
+        <TextBox x:Name="TargetDirectory" HorizontalAlignment="Left" Height="23" Margin="9,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="399" IsReadOnly="True" Grid.Column="1">
             <TextBox.Text>
                 <Binding Path="TargetPath">
                     <Binding.ValidationRules>
@@ -27,17 +28,17 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button x:Name="SourceBrowseButton" Content="..." Margin="453,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.661,0.406" Command="{Binding BrowseSourceCommand}" Height="20" HorizontalAlignment="Left" Width="31"/>
-        <Button x:Name="TargetBrowseButton" Content="..." HorizontalAlignment="Left" Margin="453,104,0,0" VerticalAlignment="Top" Width="31" Command="{Binding BrowseTargetCommand}" Height="20"/>
-        <Label Content="Quellverzeichnis" HorizontalAlignment="Left" Margin="32,17,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,0.496" Height="26" Width="96"/>
-        <Label Content="Zielverzeichnis" HorizontalAlignment="Left" Margin="32,78,0,0" VerticalAlignment="Top" Height="26" Width="87"/>
-        <Label Content="Aufnahmedatum" HorizontalAlignment="Left" Margin="32,144,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.895,-0.056" Height="26" Width="99"/>
-        <Label Content="zwischen" HorizontalAlignment="Left" Margin="32,178,0,0" VerticalAlignment="Top" Height="26" Width="58"/>
-        <Label Content="und" HorizontalAlignment="Left" Margin="248,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.035,-0.175" Height="26" Width="31"/>
-        <Button x:Name="StartButton" Content="Start" HorizontalAlignment="Left" Margin="32,300,0,0" VerticalAlignment="Top" Width="75" Command="{Binding StartCommand}" Height="20"/>
-        <Button x:Name="CloseButton" Content="Beenden" HorizontalAlignment="Left" Margin="409,300,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1.787,0.05" Command="{Binding CloseCommand}" Height="20"/>
-        <TextBox x:Name="Information" HorizontalAlignment="Left" Height="18" Margin="32,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="452" BorderThickness="0" Text="{Binding Information}" IsReadOnly="True"/>
-        <ProgressBar x:Name="ProgressBar" HorizontalAlignment="Left" Height="3" Margin="32,245,0,0" VerticalAlignment="Top" Width="452" Value="{Binding ProgressPercentage}"/>
-        <CheckBox x:Name="KeepOriginalFileName" Content="Original Dateinamen beibehalten" HorizontalAlignment="Left" Margin="36,225,0,0" VerticalAlignment="Top" Width="198" IsChecked="{Binding KeepOriginalFileName}"/>
+        <Button x:Name="SourceBrowseButton" Content="..." Margin="430,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.661,0.406" Command="{Binding BrowseSourceCommand}" Height="20" HorizontalAlignment="Left" Width="31" Grid.Column="1"/>
+        <Button x:Name="TargetBrowseButton" Content="..." HorizontalAlignment="Left" Margin="430,104,0,0" VerticalAlignment="Top" Width="31" Command="{Binding BrowseTargetCommand}" Height="20" Grid.Column="1"/>
+        <Label Content="Quellverzeichnis" HorizontalAlignment="Left" Margin="9,17,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,0.496" Height="26" Width="96" Grid.Column="1"/>
+        <Label Content="Zielverzeichnis" HorizontalAlignment="Left" Margin="9,78,0,0" VerticalAlignment="Top" Height="26" Width="87" Grid.Column="1"/>
+        <Label Content="Aufnahmedatum" HorizontalAlignment="Left" Margin="9,144,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.895,-0.056" Height="26" Width="99" Grid.Column="1"/>
+        <Label Content="zwischen" HorizontalAlignment="Left" Margin="9,178,0,0" VerticalAlignment="Top" Height="26" Width="58" Grid.Column="1"/>
+        <Label Content="und" HorizontalAlignment="Left" Margin="225,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.035,-0.175" Height="26" Width="31" Grid.Column="1"/>
+        <Button x:Name="StartButton" Content="Start" HorizontalAlignment="Left" Margin="9,300,0,0" VerticalAlignment="Top" Width="75" Command="{Binding StartCommand}" Height="20" Grid.Column="1"/>
+        <Button x:Name="CloseButton" Content="Beenden" HorizontalAlignment="Left" Margin="386,300,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1.787,0.05" Command="{Binding CloseCommand}" Height="20" Grid.Column="1"/>
+        <TextBox x:Name="Information" HorizontalAlignment="Left" Height="18" Margin="9,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="452" BorderThickness="0" Text="{Binding Information}" IsReadOnly="True" Grid.Column="1"/>
+        <ProgressBar x:Name="ProgressBar" HorizontalAlignment="Left" Height="3" Margin="9,245,0,0" VerticalAlignment="Top" Width="452" Value="{Binding ProgressPercentage}" Grid.Column="1"/>
+        <CheckBox x:Name="KeepOriginalFileName" Content="Original Dateinamen beibehalten" HorizontalAlignment="Left" Margin="13,225,0,0" VerticalAlignment="Top" Width="198" IsChecked="{Binding KeepOriginalFileName}" Grid.Column="1"/>
     </Grid>
 </Window>

@@ -1,17 +1,19 @@
 ﻿---------------------------------------------------------------------------------------
 To Do
 
-- Bei Fehlern in Source/Target Path wird der Start Button (immer noch) nicht deaktiviert
+- Problem bei der Validierung von Start- und Endedatum:
+  - Start einstellen, danach ein Ende, das vor Start liegt. Wenn man jetzt Start so korrigiert, dass es vor dem Ende liegt, dann geht der Fehler bei "Ende" nicht mehr weg.
+    Man muss explizit das Ende noch mal ändern (der selbe Wert bringt nichts) damit der Fehler verschwindet.
 - Exception Handler für den Kopierthread, z.B. bei Problemen mit den Zugriffsrechten
 - Originalnamen beibehalten hängt trotzdem die Kamera-Extension an
-  (Scheint ein Feature und kein Bug zu sein => NearlyOriginalFileName)
+  (Das ist ein Feature, kein Bug => siehe Kommentar zu ExifFile.NearlyOriginalFileName)
 
 ---------------------------------------------------------------------------------------
 Aktueller Stand
 
-2016-05-26
-- ExifFile erzeugt einen "NearlyOriginalFileName" aus dem Originalnamen und einem Modell-Suffix.
-- Liste der Kameramodelle und Suffixe erweitert.
+2018-08-22
+- Immer noch ein Problem mit der Validierung von Start/Ende. Der Start Button wird jetzt zwar freigegeben wenn man das Problem oben durchspielt,
+  aber der rote Rahmen bleibt bei dem Datum, welches nicht geändert wurde bestehen.
 
 2016-05-21
 - Die Idee mit den Validation Methoden ist ja nicht schlecht, aber wenn die Validation fehlschlägt,
@@ -23,6 +25,10 @@ Aktueller Stand
 
 ---------------------------------------------------------------------------------------
 Versionen
+2018-08-22 Version 01.14
+- kleinere Refactorings, usings entfernt, delegate-Aufrufe vereinfacht
+- Pfade können nur noch über den Browse Button geändert werden, dadurch entfällt das Problem der Validierung beim Eintippen
+
 2016-05-22: Version 01.13
 - ExifLib wird jetzt per NuGet eingebunden (hat halt den Nachteil dass man nicht reindebuggenkann).
 

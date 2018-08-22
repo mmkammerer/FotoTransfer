@@ -36,8 +36,7 @@
         /// <summary>
         /// Error on inputs
         /// </summary>
-        private bool startDateError;
-        private bool endDateError;
+        private bool dateError;
         private bool sourcePathError;
         private bool targetPathError;
 
@@ -252,11 +251,11 @@
             {
                 if (value > this.EndDate)
                 {
-                    startDateError = true;
+                    this.dateError = true;
                     throw new ArgumentException("Das Startdatum muss vor dem Endedatum liegen");
                 }
 
-                startDateError = false;
+                this.dateError = false;
                 this.startDate = value;
                 Properties.Settings.Default.StartDate = value;
                 this.OnPropertyChanged("StartDate");
@@ -277,11 +276,11 @@
             {
                 if (value < this.StartDate)
                 {
-                    endDateError = true;
+                    this.dateError = true;
                     throw new ArgumentException("Das Endedatum muss nach dem Startdatum liegen");
                 }
 
-                endDateError = false;
+                this.dateError = false;
                 this.endDate = value;
                 Properties.Settings.Default.EndDate = value;
                 this.OnPropertyChanged("EndDate");
@@ -419,7 +418,7 @@
         private bool CanStart()
         {
             // cannot start with input errors
-            if (this.sourcePathError || this.targetPathError || this.startDateError || this.endDateError)
+            if (this.sourcePathError || this.targetPathError || this.dateError)
             {
                 return false;
             }

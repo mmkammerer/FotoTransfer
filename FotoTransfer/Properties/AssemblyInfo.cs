@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -10,9 +9,9 @@ using System.Windows;
 [assembly: AssemblyTitle("FotoTransfer")]
 [assembly: AssemblyDescription("Foto-Transferprogramm")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("mmkammerer@web.de")]
+[assembly: AssemblyCompany("mmk.github@contefosco.de")]
 [assembly: AssemblyProduct("FotoTransfer")]
-[assembly: AssemblyCopyright("Copyright © 2015")]
+[assembly: AssemblyCopyright("Copyright © 2015-2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -28,16 +27,16 @@ using System.Windows;
 //des nachstehenden NeutralResourceLanguage-Attributs auf.  Aktualisieren Sie "en-US" in der nachstehenden Zeile,
 //sodass es mit der UICulture-Einstellung in der Projektdatei übereinstimmt.
 
-//[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
+[assembly: NeutralResourcesLanguage("de-DE")]
 
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //Speicherort der designspezifischen Ressourcenwörterbücher
-    //(wird verwendet, wenn eine Ressource auf der Seite
-    // oder in den Anwendungsressourcen-Wörterbüchern nicht gefunden werden kann.)
+                                     //(wird verwendet, wenn eine Ressource auf der Seite
+                                     // oder in den Anwendungsressourcen-Wörterbüchern nicht gefunden werden kann.)
     ResourceDictionaryLocation.SourceAssembly //Speicherort des generischen Ressourcenwörterbuchs
-    //(wird verwendet, wenn eine Ressource auf der Seite, in der Anwendung oder einem 
-    // designspezifischen Ressourcenwörterbuch nicht gefunden werden kann.)
+                                              //(wird verwendet, wenn eine Ressource auf der Seite, in der Anwendung oder einem 
+                                              // designspezifischen Ressourcenwörterbuch nicht gefunden werden kann.)
 )]
 
 
@@ -51,6 +50,5 @@ using System.Windows;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.13.0.0")]
+[assembly: AssemblyVersion("1.14.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: NeutralResourcesLanguageAttribute("de-DE")]
