@@ -249,16 +249,20 @@
 
             private set
             {
+                this.startDate = value;
                 if (value > this.EndDate)
                 {
                     this.dateError = true;
                     throw new ArgumentException("Das Startdatum muss vor dem Endedatum liegen");
                 }
 
-                this.dateError = false;
-                this.startDate = value;
                 Properties.Settings.Default.StartDate = value;
                 this.OnPropertyChanged("StartDate");
+                if (this.dateError)
+                {
+                    this.dateError = false;
+                    this.EndDate = this.EndDate;
+                }
             }
         }
 
@@ -274,16 +278,20 @@
 
             private set
             {
+                this.endDate = value;
                 if (value < this.StartDate)
                 {
                     this.dateError = true;
                     throw new ArgumentException("Das Endedatum muss nach dem Startdatum liegen");
                 }
 
-                this.dateError = false;
-                this.endDate = value;
                 Properties.Settings.Default.EndDate = value;
                 this.OnPropertyChanged("EndDate");
+                if (this.dateError)
+                {
+                    this.dateError = false;
+                    this.StartDate = this.StartDate;
+                }
             }
         }
 
